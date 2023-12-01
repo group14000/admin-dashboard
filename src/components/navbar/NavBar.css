@@ -1,0 +1,54 @@
+/* NavBar.css */
+
+/* Base styles for all devices */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: whitesmoke; /* Change the background color as needed */
+    color: black; /* Change the text color as needed */
+  }
+  
+  .navbar .search-box {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar .search-box label {
+    margin-right: 10px;
+  }
+  
+  .navbar .search-box input {
+    padding: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .navbar .delete-icon {
+    cursor: pointer;
+    color: #ff0000; /* Change the color as needed */
+  }
+  
+  /* Responsive styles */
+  @media screen and (max-width: 600px) {
+    .navbar {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .navbar .search-box {
+      margin-bottom: 10px;
+    }
+  }
+  
+  /* Animation effects */
+  .navbar .search-box input,
+  .navbar .delete-icon {
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .navbar .search-box input:hover,
+  .navbar .delete-icon:hover {
+    color: #007bff; /* Change the hover color as needed */
+  }
+  
