@@ -1,5 +1,4 @@
 import DeleteIcon from '@mui/icons-material/Delete';
-import './NavBar.css'; // Assuming you have a separate CSS file
 
 function NavBar() {
   return (
