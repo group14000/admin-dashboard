@@ -1,6 +1,3 @@
-// NavBar.jsx
-import DeleteIcon from '@mui/icons-material/Delete';
-
 function NavBar({ setSearchTerm }) {
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -16,9 +13,6 @@ function NavBar({ setSearchTerm }) {
           placeholder="Enter Value"
           onChange={handleSearch}
         />
-      </div>
-      <div className="delete-icon">
-        <DeleteIcon />
       </div>
     </div>
   );

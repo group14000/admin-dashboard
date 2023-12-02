@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import NavBar from "./NavBar";
@@ -12,7 +12,7 @@ const YourComponent = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editRowId, setEditRowId] = useState(null);
   const [data, setData] = useState([
-    {
+      {
       id: "1",
       name: "Aaron Miles",
       email: "aaron@mailinator.com",
