@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import NavBar from "./NavBar";
+import EditComponent from "./EditComponent";
 
 const YourComponent = () => {
   const pageSize = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [editRowId, setEditRowId] = useState(null);
   const [data, setData] = useState([
     {
       id: "1",
@@ -288,7 +293,13 @@ const YourComponent = () => {
   const totalPages = Math.ceil(data.length / pageSize);
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
-  const currentData = data.slice(startIndex, endIndex);
+
+  // Apply search filter to data
+  const filteredData = data.filter((row) =>
+    row.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const currentData = filteredData.slice(startIndex, endIndex);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -318,8 +329,25 @@ const YourComponent = () => {
   };
 
   const handleEdit = (id) => {
-    // Implement edit logic, e.g., open a modal for editing
-    console.log("Editing row with ID:", id);
+    setIsEditing(true);
+    setEditRowId(id);
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setEditRowId(null);
+  };
+
+  const handleSaveEdit = (editedData) => {
+    const updatedData = data.map((row) =>
+      row.id === editRowId ? { ...row, ...editedData } : row
+    );
+    setData(updatedData);
+    setIsEditing(false);
+    setEditRowId(null);
+
+    // Update local storage with the updated data
+    localStorage.setItem("yourDataKey", JSON.stringify(updatedData));
   };
 
   const handleDelete = (id) => {
@@ -341,6 +369,8 @@ const YourComponent = () => {
 
   return (
     <div>
+      {/* NavBar Component for Search */}
+      <NavBar setSearchTerm={setSearchTerm} />
       <table>
         <thead>
           <tr>
@@ -385,6 +415,13 @@ const YourComponent = () => {
           ))}
         </tbody>
       </table>
+      {isEditing && editRowId && (
+        <EditComponent
+          rowData={data.find((row) => row.id === editRowId)}
+          onSave={handleSaveEdit}
+          onCancel={handleCancelEdit}
+        />
+      )}
       <div>
         <button onClick={() => handlePageChange(1)}>First</button>
         <button onClick={() => handlePageChange(currentPage - 1)}>
