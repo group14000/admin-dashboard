@@ -1,4 +1,4 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import NavBar from "./NavBar";
@@ -12,7 +12,7 @@ const YourComponent = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editRowId, setEditRowId] = useState(null);
   const [data, setData] = useState([
-      {
+    {
       id: "1",
       name: "Aaron Miles",
       email: "aaron@mailinator.com",
@@ -368,53 +368,61 @@ const YourComponent = () => {
   }, []);
 
   return (
-    <div>
+    <div className="container mx-auto p-4">
       {/* NavBar Component for Search */}
       <NavBar setSearchTerm={setSearchTerm} />
-      <table>
-        <thead>
-          <tr>
-            <th>
-              <input type="checkbox" onChange={handleSelectAllRows} />
-            </th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentData.map((row) => (
-            <tr
-              key={row.id}
-              style={{
-                backgroundColor: selectedRows.includes(row.id)
-                  ? "#ddd"
-                  : "transparent",
-              }}
-            >
-              <td>
-                <input
-                  type="checkbox"
-                  checked={selectedRows.includes(row.id)}
-                  onChange={() => handleRowSelection(row.id)}
-                />
-              </td>
-              <td>{row.name}</td>
-              <td>{row.email}</td>
-              <td>{row.role}</td>
-              <td>
-                <button onClick={() => handleEdit(row.id)}>
-                  <EditIcon />
-                </button>
-                <button onClick={() => handleDelete(row.id)}>
-                  <DeleteIcon />
-                </button>
-              </td>
+
+      <div className="overflow-x-auto">
+        <table className="min-w-full border-collapse border border-gray-300 mt-4">
+          <thead className="bg-gray-200">
+            <tr>
+              <th className="p-2">
+                <input type="checkbox" onChange={handleSelectAllRows} />
+              </th>
+              <th className="p-2">Name</th>
+              <th className="p-2">Email</th>
+              <th className="p-2">Role</th>
+              <th className="p-2">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {currentData.map((row) => (
+              <tr
+                key={row.id}
+                className={`${
+                  selectedRows.includes(row.id) ? "bg-gray-100" : ""
+                } hover:bg-gray-50`}
+              >
+                <td className="p-2">
+                  <input
+                    type="checkbox"
+                    checked={selectedRows.includes(row.id)}
+                    onChange={() => handleRowSelection(row.id)}
+                  />
+                </td>
+                <td className="p-2">{row.name}</td>
+                <td className="p-2">{row.email}</td>
+                <td className="p-2">{row.role}</td>
+                <td className="p-2 space-x-2">
+                  <button
+                    onClick={() => handleEdit(row.id)}
+                    className="text-blue-500 hover:text-blue-700"
+                  >
+                    <EditIcon />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(row.id)}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    <DeleteIcon />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
       {isEditing && editRowId && (
         <EditComponent
           rowData={data.find((row) => row.id === editRowId)}
@@ -422,20 +430,53 @@ const YourComponent = () => {
           onCancel={handleCancelEdit}
         />
       )}
-      <div>
-        <button onClick={() => handlePageChange(1)}>First</button>
-        <button onClick={() => handlePageChange(currentPage - 1)}>
+
+      <div className="flex items-center justify-center mt-4 space-x-2">
+        <button
+          onClick={() => handlePageChange(1)}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+        >
+          First
+        </button>
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+        >
           Previous
         </button>
         {Array.from({ length: totalPages }, (_, index) => (
-          <button key={index + 1} onClick={() => handlePageChange(index + 1)}>
+          <button
+            key={index + 1}
+            onClick={() => handlePageChange(index + 1)}
+            className={`px-4 py-2 ${
+              currentPage === index + 1
+                ? "bg-blue-700 text-white"
+                : "bg-blue-500 text-white hover:bg-blue-700"
+            } rounded`}
+          >
             {index + 1}
           </button>
         ))}
-        <button onClick={() => handlePageChange(currentPage + 1)}>Next</button>
-        <button onClick={() => handlePageChange(totalPages)}>Last</button>
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+        >
+          Next
+        </button>
+        <button
+          onClick={() => handlePageChange(totalPages)}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+        >
+          Last
+        </button>
       </div>
-      <button onClick={handleDeleteSelected}>Delete Selected</button>
+
+      <button
+        onClick={handleDeleteSelected}
+        className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700"
+      >
+        Delete Selected
+      </button>
     </div>
   );
 };
